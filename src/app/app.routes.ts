@@ -12,6 +12,9 @@ import { PlanesComponent } from './core/components/pages/planes/planes.component
 import { PreguntaExamenComponent } from './core/components/pages/pregunta-examen/pregunta-examen.component';
 import { ExamenInicialComponent } from './core/components/pages/examen-inicial/examen-inicial.component';
 import { EjercicioLeccionComponent } from './core/components/pages/ejercicio-leccion/ejercicio-leccion.component';
+import { EstudianteNivelComponent } from './core/components/pages/estudiante-nivel/estudiante-nivel.component';
+import { LeccionNivelComponent } from './core/components/pages/leccion-nivel/leccion-nivel.component';
+import { LeccionRetroalimentacionComponent } from './core/components/pages/leccion-retroalimentacion/leccion-retroalimentacion.component';
 
 export const routes: Routes = [
 
@@ -21,7 +24,7 @@ export const routes: Routes = [
         children:[
             {
                 path:'dashboard',
-                component:DashboardComponent,
+                component:EstudianteNivelComponent,
                 canActivate:[AuthGuard]
             },
             
@@ -43,6 +46,26 @@ export const routes: Routes = [
             {
                 path:'resolver_ejercicio/:id',
                 component:EjercicioLeccionComponent,
+                canActivate:[AuthGuard]
+            },
+            {
+                path:'examen-inicial',
+                component:ExamenInicialComponent,
+                canActivate:[AuthGuard]
+            },
+            {
+                path:'nivel-estudiante',
+                component:EstudianteNivelComponent,
+                canActivate:[AuthGuard]
+            },
+            {
+                path:'nivel/:id/leccion',
+                component:LeccionNivelComponent,
+                canActivate:[AuthGuard]
+            },
+            {
+                path:'leccion_retroalimentacion/:leccion',
+                component:LeccionRetroalimentacionComponent,
                 canActivate:[AuthGuard]
             }
            
@@ -74,7 +97,9 @@ export const routes: Routes = [
         path:'examen_inicial',
         component:ExamenInicialComponent,
         canActivate:[AuthGuard]
-    }
+    },
+    
+
 
 
 

@@ -12,7 +12,7 @@
                 <img src="assets/demo/images/landing/free.svg" class="w-10 h-10 mx-auto" alt="free">
                 <div class="my-5 text-center">
                     <span class="text-5xl font-bold mr-2 text-900">$0</span>
-                    <span class="text-600">Por mes</span>
+                    
                     <button [routerLink]="['/']" pButton pRipple label="iniciar" class="block mx-auto mt-4 p-button-rounded border-none ml-3 font-light line-height-2 bg-blue-500 text-white"></button>
                 </div>
                 <p-divider class="w-full bg-surface-200"></p-divider>
@@ -41,8 +41,9 @@
                 <img src="assets/demo/images/landing/enterprise.svg" class="w-10 h-10 mx-auto" alt="enterprise">
                 <div class="my-5 text-center">
                     <span class="text-5xl font-bold mr-2 text-900">$9.99</span>
-                    <span class="text-600">Por mes</span>
-                    <button (click)="suscripcionPremium()"   pButton pRipple label="Obtener plan" class="block mx-auto mt-4 p-button-rounded border-none ml-3 font-light line-height-2 bg-blue-500 text-white"></button>
+                    
+                    <button (click)="suscripcionPremium()"   pButton pRipple label="Obtener plan" class="block mx-auto mb-4 mt-4 p-button-rounded border-none ml-3 font-light line-height-2 bg-blue-500 text-white"></button>
+                    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
                 </div>
                 <p-divider class="w-full bg-surface-200"></p-divider>
                 <ul class="my-5 list-none p-0 flex text-900 flex-column">

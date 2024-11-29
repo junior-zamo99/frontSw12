@@ -8,6 +8,7 @@ import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { UsuarioService } from '../../services/usuario.service';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class AuthComponent {
   constructor(public layoutService: LayoutService,
     private authService:AuthService,
     private router:Router,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    private usuarioService:UsuarioService
    
 
   ) { }
@@ -44,10 +46,16 @@ export class AuthComponent {
       (res) => {
         console.log(res);
         localStorage.setItem('token', res.accessToken);
-        localStorage.setItem('user', JSON.stringify(res.user));
+        localStorage.setItem('user', res.user.id);
+        localStorage.setItem('rol', res.user.roles[0].name);
         this.router.navigate(['/dashboard']);
         this.toastr.success('Bienvenido', 'Inicio de sesión exitoso');
-      
+        this.usuarioService.obtenerUsuario(res.accessToken).subscribe(
+          (res) => {
+            console.log(res);
+            
+          }
+        )
       },
       (err) => {
         console.log(err);
@@ -55,4 +63,6 @@ export class AuthComponent {
       }
     )
   }
+
+  
 }

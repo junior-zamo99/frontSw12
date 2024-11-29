@@ -1,0 +1,28 @@
+<div class="card">
+    <h3>
+        Retroalimentacion
+    </h3>
+    <div class="flex justify-content-center" *ngIf="!cargarDatos">
+        <p-progressSpinner ariaLabel="loading" />
+    </div>
+    <div class="flex justify-content-center" *ngIf="cargarDatos">
+        <p-card   [header]="retroalimentacion.topic" [subheader]="retroalimentacion.details" [style]="{ width: '360px' }">
+            <ng-template pTemplate="header">
+                <img alt="Card" src={{retroalimentacion.image_url}} />
+            </ng-template>
+            <div *ngFor="let item of retroalimentacion.examples">
+                <p class="text-cyan-600">Ejemplos </p>
+                <small>------------</small>
+                <p >
+                    {{item}}
+                </p>
+                
+            </div>
+            <ng-template pTemplate="footer">
+                <div class="flex gap-3 mt-1">
+                    <p-button (onClick)="goBack()" label="volver" icon="pi pi-rows-left" class="w-full" styleClass="w-full" />
+                </div>
+            </ng-template>
+        </p-card>
+    </div>
+</div>

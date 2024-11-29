@@ -53,6 +53,8 @@ export class RegisterComponent {
     .subscribe( (res) => {
       console.log(res);
       localStorage.setItem('token', res.accessToken);
+      localStorage.setItem('user', res.estudiante_id);
+      localStorage.setItem('rol', "estudiante");
       this.router.navigate(['/pregunta_examen']);
       this.toastr.success('Registro exitoso');
     },

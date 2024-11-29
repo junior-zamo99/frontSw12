@@ -1,1 +1,95 @@
-<p>examen-inicial works!</p>
+<div class="card">
+
+    <h2>
+        examen inicial
+    </h2>
+
+    <div *ngIf="cargarDatos">
+        <div class=" grid justify-content-center  md:mt-0" *ngFor="let item of preguntas; let i = index">
+            <div class="  col-6 lg:col-5 p-0 md:p-3  md:mt-0" *ngIf="item.type=='multiple_choice'">
+                <div class="p-3 flex flex-column border-200 pricing-card cursor-pointer border-2 hover:border-primary transition-duration-300 transition-all" style="border-radius:10px">
+                    <h5>
+                        {{item.question}}
+                    </h5>
+                    <div *ngFor="let category of item.options" class="field-checkbox">
+                            <p-radioButton 
+                                    [inputId]="category.key"
+                                    name="category" 
+                                    [value]="category" 
+                                    [(ngModel)]="respuestas[item.question]" />
+                                <label [for]="category.key" class="ml-2">
+                                    {{ category }}
+                                </label>
+                            
+                    </div>
+
+                    <p-button label="Enviar" (onClick)="addQuestion(item.question)" />
+                   
+                </div>
+            </div>  
+            <div class=" col-6 lg:col-5 p-0 md:p-3  md:mt-0 " *ngIf="item.type!='multiple_choice'">
+                <div class="p-3 flex flex-column border-200 pricing-card cursor-pointer border-2 hover:border-primary transition-duration-300 transition-all" style="border-radius:10px">
+                    <h5>
+                        {{item.question}}
+                    </h5>
+                    <div class="field">
+                           
+                            <input pInputText id="name1" type="text" [(ngModel)]="respuestas[item.question]"  />
+                    </div>
+                    <p-button label="Enviar" (onClick)="addQuestion(item.question)" />
+                    
+                </div>
+
+            </div>
+        </div>
+
+        <div class="flex justify-content-center">
+            <p-button label="Enviar" severity="success" (onClick)="enviarRespuestas()"  />
+        </div>
+
+    </div>
+
+    <div *ngIf="!cargarDatos" class="flex justify-content-center">
+        <p-progressSpinner ariaLabel="loading"  />
+    </div>
+    
+
+
+</div>
+
+<p-dialog 
+    [(visible)]="mostrarModal" 
+    [style]="{ width: '450px' }" 
+    header="El nivel asignado es:"
+    [modal]="true" 
+    styleClass="p-fluid">
+        <ng-template pTemplate="content">
+           
+            <div>
+                <h3>{{nivel.nivel}}</h3>
+            </div>
+
+            <div *ngFor="let item of nivel.recomendaciones" >
+                <p>{{item}}</p>
+                <small>------------------------</small>
+            </div>
+            
+   
+
+          
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <p-button 
+                label="Repetir" 
+                icon="pi pi-times" 
+                [text]="true" 
+                (onClick)="ocultarModal()" />
+            <p-button
+                label="Aceptar" 
+                icon="pi pi-check" 
+                [text]="true" 
+                (onClick)="actualizarNivel()"
+                 />
+        </ng-template>
+</p-dialog>

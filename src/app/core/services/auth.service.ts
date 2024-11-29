@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from '../../../environments/environment';
+import { GLOBAL } from './GLOBAL';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class AuthService {
     private router: Router
   ) { }
 
-  private url='http://127.0.0.1:8000/api/'
+  public url=GLOBAL.url
   
   login(data: any):Observable<any> {
     console.log(data)

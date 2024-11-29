@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { GLOBAL } from './GLOBAL';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,7 @@ import { Observable } from 'rxjs';
 export class NivelService {
 
   
-  private url='http://127.0.0.1:8000/api/'
+  public url=GLOBAL.url
   constructor(
     private  _http: HttpClient
   ) {}
@@ -30,5 +32,7 @@ export class NivelService {
     });
     return this._http.get(this.url+'nivel',{headers})
   }
+
+
 
 }

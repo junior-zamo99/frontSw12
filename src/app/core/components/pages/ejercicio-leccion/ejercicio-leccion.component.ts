@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -9,6 +9,9 @@ import { ActivatedRoute } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
+
 @Component({
   selector: 'app-ejercicio-leccion',
   standalone: true,
@@ -26,6 +29,8 @@ export class EjercicioLeccionComponent {
   constructor(
     private _leccionesService: LeccionService,
     private _route: ActivatedRoute,
+    private _location: Location,
+    private toastr:ToastrService,
   ){}
   
   ngOnInit() { 
@@ -47,7 +52,12 @@ export class EjercicioLeccionComponent {
     });
       
   }
-  
+
+  goBack(): void {
+    this.toastr.success('Lección completada', '¡Felicidades!');
+    this._location.back();
+    
+  }
 
   // Método para construir la URL completa del audio
   getAudioUrl(audioPath: string): string {
@@ -59,6 +69,7 @@ export class EjercicioLeccionComponent {
     const data={}
     this._leccionesService.leccionCompleta(this.id,data,this.token).subscribe((data) => {
       console.log(data)
+      this.goBack()
     });
   }
 
