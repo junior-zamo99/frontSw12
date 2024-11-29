@@ -1,0 +1,128 @@
+<div class="card">
+    <div>
+        <h1 >
+            Nivel
+        </h1>
+    </div>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <p-button
+                severity="success" 
+                label="Nuevo" 
+                icon="pi pi-plus" 
+                class="mr-2" 
+                (onClick)="openNew()" />
+        </ng-template>
+
+       
+    </p-toolbar>
+
+    <p-table
+        #dt
+        [value]="niveles"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="mostrando {first} a {last} de {totalRecords} entradas"
+        [showCurrentPageReport]="true"
+    >
+       
+        <ng-template pTemplate="header">
+            <tr>
+              
+                <th pSortableColumn="nombre" style="min-width:15rem">
+                    Nombre <p-sortIcon field="nombre" />
+                </th>
+                <th pSortableColumn="descripcion" style="min-width:15rem">
+                    descripcion <p-sortIcon field="descripcion" />
+                </th>
+               
+               
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td>
+                    {{ user.nombre }}
+                </td>
+                <td>
+                    {{ user.descripcion }}
+                </td>
+               
+                
+                <td>
+                    <p-button 
+                        icon="pi pi-pencil" 
+                        class="mr-2" 
+                        [rounded]="true" 
+                        [outlined]="true" 
+                        severity="success" 
+                        (onClick)="editProduct(nivel)" />
+                    <p-button 
+                        icon="pi pi-trash" 
+                        severity="danger" 
+                        [rounded]="true" 
+                        [outlined]="true" 
+                        (onClick)="deleteProduct(nivel)" />
+                </td>
+            </tr>
+        </ng-template>
+        
+    </p-table>
+
+    <p-dialog 
+        [(visible)]="nivelmodal" 
+        [style]="{ width: '450px' }" 
+        header="Crear Nivel" 
+        [modal]="true" 
+        styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="name">Nombre de Nivel</label>
+                    <input 
+                        type="text" 
+                        pInputText 
+                        id="name" 
+                        [(ngModel)]="nivel.nombre" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !nivel.nombre">
+                        Nombre de nivel es requerido.
+                    </small>
+                </div>
+                <div class="field">
+                    <label for="name">Descripcion del nivel</label>
+                    <input 
+                        type="text" 
+                        pInputText 
+                        id="name" 
+                        [(ngModel)]="nivel.descripcion" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !nivel.descripcion">
+                        la descripcion es requerido.
+                    </small>
+                </div>
+                
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <p-button 
+                    label="Cancelar" 
+                    icon="pi pi-times" 
+                    [text]="true" 
+                    (onClick)="hideDialog()" />
+                <p-button
+                    label="Guardar" 
+                    icon="pi pi-check" 
+                    [text]="true" 
+                    (onClick)="saveProduct()" />
+            </ng-template>
+    </p-dialog>
+
+    
+</div>

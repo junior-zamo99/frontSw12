@@ -1,0 +1,99 @@
+
+<div class="card">
+    <h3>ejercicios</h3>
+    <p-timeline [value]="ejercicios" align="alternate" styleClass="customized-timeline">
+        <ng-template pTemplate="marker" let-event>
+            <span 
+                class="flex w-2rem h-2rem align-items-center justify-content-center text-white border-circle z-1 shadow-1"
+                [style]="{ 'background-color': event.color }">
+                <i [class]="event.icono"></i>
+               >
+                   
+            </span>
+        </ng-template>
+        <ng-template pTemplate="content" let-event>
+            <p-card *ngIf="event.tipo==1" >
+                
+                <ng-template pTemplate="header">
+                    <p class="text-red-600">pregunta y respuesta</p>
+                </ng-template>
+                <div class="text-center">
+                    <h4>{{event.pregunta_texto}}</h4>
+                    <input 
+                    type="text" 
+                    pInputText 
+                    placeholder="respuesta"
+                    [(ngModel)]="event.respuesta"
+                    class="p-inputtext p-component p-filled w-full"
+                    variant="filled" />
+                    
+                </div>
+                <ng-template pTemplate="footer">
+                    <p-button  label="enviar" (onClick)="enviarRespuesta(event)"  [text]="true" />
+                </ng-template>
+            </p-card>
+
+            <p-card *ngIf="event.tipo==2"  >
+                <ng-template pTemplate="header">
+                    <p class="text-red-600">Audio pregunta</p>
+                </ng-template>
+                <div class="text-center items-center gap-4 p-4" >
+                    <h4 *ngIf="event.pregunta_texto" class="text-lg font-medium">{{event.pregunta_texto}}</h4>
+                    <audio *ngIf="event.pregunta_audio" controls class="w-full">
+                        <source [src]="getAudioUrl(event.pregunta_audio)" type="audio/mpeg" />
+                        Tu navegador no soporta el elemento de audio.
+                    </audio>
+
+                    <input 
+                    type="text" 
+                    pInputText 
+                    placeholder="respuesta"
+                    [(ngModel)]="event.respuesta"
+                    class="p-inputtext p-component p-filled w-full"
+                    variant="filled" />
+                </div>
+                <ng-template pTemplate="footer">
+                    <p-button label="enviar" (onClick)="enviarRespuesta(event)"   [text]="true" />
+                </ng-template>
+                
+               </p-card>
+
+               <p-card *ngIf="event.tipo==4"  >
+    
+                    <ng-template pTemplate="header">
+                            <p class="text-red-600">Falso o verdadero</p>
+                    </ng-template>
+                    <div class="text-center">
+                        <h4 >{{event.pregunta_texto}}</h4>
+                    <div class=" gap-2">
+                        <p-checkbox 
+                        label="verdadero" 
+                        name="group" 
+                        class="mr-4"
+                        [(ngModel)]="event.respuesta"
+                        value="verdadero"
+                         />
+
+                         <p-checkbox 
+                         label="falso" 
+                         name="group" 
+                            [(ngModel)]="event.respuesta"
+                            value="falso"
+                          />
+                    </div>
+                    </div>
+                    <ng-template pTemplate="footer">
+                        <p-button  label="enviar" (onClick)="enviarRespuesta(event)" [text]="true" />
+                    </ng-template>
+                
+               </p-card>
+
+        </ng-template>
+    </p-timeline>
+
+
+    <div class="flex justify-center gap-4 mt-4">
+        <p-button label="Finalizar" (onClick)="TerminarLeccion()"  />
+        
+    </div>
+</div>

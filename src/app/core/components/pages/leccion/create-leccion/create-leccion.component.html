@@ -1,0 +1,396 @@
+
+        <div class="card p-fluid">
+           <h3>
+            Crear leccion
+           </h3>
+			<h5>Nombre</h5>
+			<span class="p-float-label">
+				<input id="float-input" name="nombre" type="text" [(ngModel)]="leccion.nombre" pInputText>
+			</span>
+
+			<h5>Descripcion</h5>
+			<textarea rows="5" cols="30" name="descripcion" placeholder="Descripcion" [(ngModel)]="leccion.descripcion" pInputTextarea></textarea>
+
+            <h5>Nivel</h5>
+			<p-dropdown  [options]="niveles" optionLabel="nombre" [(ngModel)]="nivelSeleccionado"  placeholder="Seleccione el nivel" [showClear]="true"></p-dropdown>
+
+            <button class="my-4" (click)="crear()" pButton pRipple label="Crear"></button>
+            
+        </div>
+   
+        <!---card 2-->
+
+        <div class="card">
+            <h3>Crear ejercicio</h3>
+            <h5>tipo de ejercicio</h5>
+            <div class="flex flex-wrap gap-2">
+				<button pButton pRipple label="Pregunta" (click)="openNew()" ></button>
+				<button pButton pRipple label="Pregunta audio" (click)="openModalAudio()"></button>
+				<button pButton pRipple label="seleccion multiple" (click)="openModalSeleccion()"></button>
+				<button pButton pRipple label="falso o verdadero" (click)="openModalFalsoVerdadero()"></button>
+			</div>
+            <h3>ejercicos</h3>
+            <div>
+                <p-table [value]="ejercicios" [paginator]="true" [rows]="5">
+                    <ng-template pTemplate="header">
+                        <tr>
+                           
+                            <th>Pregunta</th>
+                            <th>Respuesta</th>
+                            <th>Dificultad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-ejercicio>
+                        <tr>
+                            
+                            <td>{{ejercicio.pregunta_texto}}</td>
+                            <td>{{ejercicio.respuesta_texto}}</td>
+                            <td>{{ejercicio.dificultad}}</td>
+                            <td>
+                                
+                                <button pButton pRipple icon="pi pi-trash" (click)="deleteEjercicio(ejercicio)"></button>
+                            
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+   
+
+        <!--- modal pregunta-->
+    <p-dialog 
+    [(visible)]="ejerciciomodal" 
+    [style]="{ width: '450px' }" 
+    header="Crear ejercicio de pregunta" 
+    [modal]="true" 
+    styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="field">
+                <label for="name">dificultad</label>
+                <p-dropdown  
+                [options]="dificultad"
+                 optionLabel="label"
+                 placeholder="Seleccione la dificultad" 
+                 [(ngModel)]="ejercicioSeleccionado"
+                 [showClear]="true"></p-dropdown>
+
+            </div>
+            <div class="field">
+                <label for="name">Pregunta</label>
+                <input 
+                    type="text" 
+                    pInputText 
+                    id="name" 
+                    [(ngModel)]="ejercicio.pregunta_texto" 
+                    required 
+                    autofocus />
+                <small class="p-error" *ngIf="submitted && !ejercicio.username">
+                    Nombre de usuario es requerido.
+                </small>
+            </div>
+            <div class="field">
+                <label for="name">Respuesta</label>
+                <input 
+                    type="text" 
+                    pInputText 
+                    id="name" 
+                    [(ngModel)]="ejercicio.respuesta_texto" 
+                    required 
+                    autofocus />
+                <small class="p-error" *ngIf="submitted && !ejercicio.respuesta_texto">
+                    la respuesta es requerida.
+                </small>
+            </div>
+            
+   
+
+          
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <p-button 
+                label="Cancelar" 
+                icon="pi pi-times" 
+                [text]="true" 
+                (onClick)="hideDialog()" />
+            <p-button
+                label="Guardar" 
+                icon="pi pi-check" 
+                [text]="true" 
+                (onClick)="nuevoEjercicio()"
+                 />
+        </ng-template>
+</p-dialog>
+
+<!---modal audio-->
+
+<p-dialog 
+    [(visible)]="ejerciciomodalaudio" 
+    [style]="{ width: '450px' }" 
+    header="crear ejercicio de audio" 
+    [modal]="true" 
+    styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="field">
+                <label for="name">dificultad</label>
+                <p-dropdown  
+                [options]="dificultad"
+                 optionLabel="label"
+                 placeholder="Seleccione la dificultad" 
+                 [(ngModel)]="ejercicioSeleccionado"
+                 [showClear]="true"></p-dropdown>
+
+            </div>
+
+            <div class="field">
+                <label for="name">Pregunta</label>
+                <input 
+                    type="text" 
+                    pInputText 
+                    id="name" 
+                    [(ngModel)]="ejercicio.pregunta_texto" 
+                    required 
+                    autofocus />
+               
+            </div>
+            <div class="field">
+                <div class="archivo">
+                    <label for="audioUpload">Seleccionar archivo de audio</label>
+                    <input
+                        type="file"
+                        id="audioUpload"
+                        accept="audio/*"
+                        (change)="onFileSelect($event)"
+                    />
+                    <audio *ngIf="audioPreview" [src]="audioPreview" controls></audio>
+                </div>
+                
+            </div>
+           
+            
+            <div class="field">
+                <label for="name">Respuesta</label>
+                <input 
+                    type="text" 
+                    pInputText 
+                    id="name" 
+                    [(ngModel)]="ejercicio.respuesta_texto" 
+                    required 
+                    autofocus />
+                <small class="p-error" *ngIf="submitted && !ejercicio.respuesta_texto">
+                    la respuesta es requerida.
+                </small>
+            </div>
+            
+   
+
+          
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <p-button 
+                label="Cancelar" 
+                icon="pi pi-times" 
+                [text]="true" 
+                (onClick)="hideDialog()" />
+            <p-button
+                label="Guardar" 
+                icon="pi pi-check" 
+                [text]="true" 
+                (onClick)="nuevoEjercicioAudio()"
+                 />
+        </ng-template>
+</p-dialog>
+
+
+<!---modal seleccion multiple-->
+
+<p-dialog 
+    [(visible)]="ejerciciomodalseleccion" 
+    [style]="{ width: '450px' }" 
+    header="Crear ejercicio de seleccion multiple" 
+    [modal]="true" 
+    styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="field">
+                <label for="name">dificultad</label>
+                <p-dropdown  
+                [options]="dificultad"
+                 optionLabel="label"
+                 placeholder="Seleccione la dificultad" 
+                 [(ngModel)]="ejercicioSeleccionado"
+                 [showClear]="true"></p-dropdown>
+
+            </div>
+            
+            <div class="field">
+                <label for="name">Pregunta</label>
+                <input 
+                    type="text" 
+                    pInputText 
+                    id="name" 
+                    [(ngModel)]="ejercicio.pregunta_texto" 
+                    required 
+                    autofocus />
+                <small class="p-error" *ngIf="submitted && !ejercicio.pregunta_texto">
+                    la pregunta es requerida.
+                </small>
+            </div>
+            
+            <div class="field">
+                <label for="name">Respuesta</label>
+                <input 
+                    type="text" 
+                    pInputText 
+                    id="name" 
+                    [(ngModel)]="ejercicio.respuesta_texto" 
+                    required 
+                    autofocus />
+                <small class="p-error" *ngIf="submitted && !ejercicio.respuesta_texto">
+                    la respuesta es requerida.
+                </small>
+            </div>
+
+            <div class="grid">
+                <div class="field col-5" >
+                    <label for="name">opcion 1</label>
+                    <input 
+                        type="text" 
+                        pInputText 
+                        id="name" 
+                        [(ngModel)]="opcion_1" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !ejercicio.respuesta_texto">
+                        la respuesta es requerida.
+                    </small>
+                </div>
+
+                <div class="field col-5">
+                    <label for="name">opcion 2</label>
+                    <input 
+                        type="text" 
+                        pInputText 
+                        id="name" 
+                        [(ngModel)]="opcion_2" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !ejercicio.respuesta_texto">
+                        la respuesta es requerida.
+                    </small>
+                </div>
+                <div class="field col-5">
+                    <label for="name">opcion 3</label>
+                    <input 
+                        type="text" 
+                        pInputText 
+                        id="name" 
+                        [(ngModel)]="opcion_3" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !ejercicio.respuesta_texto">
+                        la respuesta es requerida.
+                    </small>
+                </div>
+                <div class="field col-5">
+                    <label for="name">opcion 4</label>
+                    <input 
+                        type="text" 
+                        pInputText 
+                        id="name" 
+                        [(ngModel)]="opcion_4" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !ejercicio.respuesta_texto">
+                        la respuesta es requerida.
+                    </small>
+                </div>
+            </div>
+            
+   
+
+          
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <p-button 
+                label="Cancelar" 
+                icon="pi pi-times" 
+                [text]="true" 
+                (onClick)="hideDialog()" />
+            <p-button
+                label="Guardar" 
+                icon="pi pi-check" 
+                [text]="true" 
+                (onClick)="nuevoEjercicioSeleccion()"
+                 />
+        </ng-template>
+</p-dialog>
+
+<!---modal falso o verdadero-->
+
+<p-dialog 
+    [(visible)]="ejerciciomodalfalsoverdadero" 
+    [style]="{ width: '450px' }" 
+    header="Crear ejercicio de falso o verdadero" 
+    [modal]="true" 
+    styleClass="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="field">
+                <label for="name">dificultad</label>
+                <p-dropdown  
+                [options]="dificultad"
+                 optionLabel="label"
+                 placeholder="Seleccione la dificultad" 
+                 [(ngModel)]="ejercicioSeleccionado"
+                 [showClear]="true"></p-dropdown>
+
+            </div>
+            <div class="field">
+                <label for="name">Pregunta</label>
+                <input 
+                    type="text" 
+                    pInputText 
+                    id="name" 
+                    [(ngModel)]="ejercicio.pregunta_texto" 
+                    required 
+                    autofocus />
+                <small class="p-error" *ngIf="submitted && !ejercicio.pregunta_texto">
+                    la pregunta es requerida.
+                </small>
+            </div>
+            
+            <div class="field">
+                <label for="name">Respuesta</label>
+                <input 
+                    type="text" 
+                    pInputText 
+                    id="name" 
+                    [(ngModel)]="ejercicio.respuesta_texto" 
+                    required 
+                    autofocus />
+                <small class="p-error" *ngIf="submitted && !ejercicio.respuesta_texto">
+                    la respuesta es requerida.
+                </small>
+            </div>
+            
+   
+
+          
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <p-button 
+                label="Cancelar" 
+                icon="pi pi-times" 
+                [text]="true" 
+                (onClick)="hideDialog()" />
+            <p-button
+                label="Guardar" 
+                icon="pi pi-check" 
+                [text]="true" 
+                (onClick)="nuevoEjercicioFalsoVerdadero()"
+                 />
+        </ng-template>
+</p-dialog>

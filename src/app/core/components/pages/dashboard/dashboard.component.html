@@ -1,0 +1,22 @@
+
+<div class="card">
+    <h3>lecciones</h3>
+    <p-timeline [value]="lecciones" align="alternate" styleClass="customized-timeline">
+        <ng-template pTemplate="marker" let-event>
+            <span 
+                class="flex w-2rem h-2rem align-items-center justify-content-center text-white border-circle z-1 shadow-1" 
+                [style]="{ 'background-color': event.color }">
+                <i [class]="event.icono"></i>
+                >
+                   
+            </span>
+        </ng-template>
+        <ng-template pTemplate="content" let-event>
+            <p-card [header]="event.nombre" [subheader]="event.descripcion">
+            
+                <p-button *ngIf="!event.completado" [routerLink]="['/resolver_ejercicio', event.id]"  label="Resolver"  />
+                <p-button *ngIf="event.completado"  label="resuelto" severity="secondary"   />
+            </p-card>
+        </ng-template>
+    </p-timeline>
+</div>

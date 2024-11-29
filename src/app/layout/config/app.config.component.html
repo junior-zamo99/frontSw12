@@ -1,0 +1,35 @@
+<button class="layout-config-button p-link" type="button" (click)="onConfigButtonClick()">
+    <i class="pi pi-cog"></i>
+</button>
+
+<p-sidebar [(visible)]="visible" position="right" [transitionOptions]="'.3s cubic-bezier(0, 0, 0.2, 1)'" styleClass="layout-config-sidebar w-20rem">
+  
+    <h5>Tema</h5>
+    <div class="grid">
+     
+        <div class="col-3">
+            <button class="p-link w-2rem h-2rem" (click)="changeTheme('lara-light-blue', 'light')">
+                <img src="assets/layout/images/themes/lara-light-blue.png" class="w-2rem h-2rem" alt="Lara Light Blue">
+            </button>
+        </div>
+        <div class="col-3">
+            <button class="p-link w-2rem h-2rem" (click)="changeTheme('lara-light-teal', 'light')">
+                <img src="assets/layout/images/themes/lara-light-teal.png" class="w-2rem h-2rem" alt="Lara Light Teal">
+            </button>
+        </div>
+        
+        <div class="col-3">
+            <button class="p-link w-2rem h-2rem" (click)="changeTheme('lara-dark-blue', 'dark')">
+                <img src="assets/layout/images/themes/lara-dark-blue.png" class="w-2rem h-2rem" alt="Lara Dark Blue">
+            </button>
+        </div>
+       
+        <div class="col-3">
+            <button class="p-link w-2rem h-2rem" (click)="changeTheme('lara-dark-teal', 'dark')">
+                <img src="assets/layout/images/themes/lara-dark-teal.png" class="w-2rem h-2rem" alt="Lara Dark Teal">
+            </button>
+        </div>
+    </div>
+
+   
+</p-sidebar>
