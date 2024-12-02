@@ -17,6 +17,7 @@ import { TableModule } from 'primeng/table';
 
 import { FileUploadModule } from 'primeng/fileupload';
 import { LeccionService } from '../../../../services/leccion.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-leccion',
@@ -72,7 +73,8 @@ export class CreateLeccionComponent {
 
 	constructor(
 		private _nivelService: NivelService,
-		private _leccionService: LeccionService
+		private _leccionService: LeccionService,
+		private toast:ToastrService
 	) { }
 
 
@@ -165,9 +167,11 @@ export class CreateLeccionComponent {
 						this._leccionService.createEjercicio(formData,this.token).subscribe(
 							response => {
 								console.log(response);
+								this.toast.success('Ejercicio creado','¡Éxito!');
 							},
 							error => {
 								console.log(error);
+								this.toast.error('Error al crear ejercicio','¡Error!');
 							}
 						);
 					}
