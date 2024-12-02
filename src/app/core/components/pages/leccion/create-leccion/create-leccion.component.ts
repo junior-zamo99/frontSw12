@@ -162,12 +162,6 @@ export class CreateLeccionComponent {
 						}
 						console.log(formData)
 						console.log(ejercicio);
-						
-					
-						
-	
-						
-
 						this._leccionService.createEjercicio(formData,this.token).subscribe(
 							response => {
 								console.log(response);
@@ -218,8 +212,7 @@ export class CreateLeccionComponent {
 	nuevoEjercicioAudio(){
 		this.ejercicio.tipo=2;
 		this.ejercicio.dificultad = this.ejercicioSeleccionado.value;
-		
-		this.ejercicio.pregunta_texto = this.selectedFile ? this.selectedFile.name : '';
+		this.ejercicio.pregunta_audio = this.selectedFile;
 		console.log(this.ejercicio);
 		this.ejercicios.push(this.ejercicio);
 		this.hideDialog()

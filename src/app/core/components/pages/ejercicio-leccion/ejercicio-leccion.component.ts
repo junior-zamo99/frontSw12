@@ -10,6 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { GLOBAL } from '../../../services/GLOBAL';
 
 
 @Component({
@@ -22,6 +23,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EjercicioLeccionComponent {
   public id:any
+  public url=GLOBAL.urlAudio
   public token:any=localStorage.getItem('token');
   public ejercicios:Array<any> = [];
   baseUrl: string = 'http://127.0.0.1:8000/storage/';
@@ -61,7 +63,8 @@ export class EjercicioLeccionComponent {
 
   // Método para construir la URL completa del audio
   getAudioUrl(audioPath: string): string {
-      return `${this.baseUrl}/${audioPath}`;
+    console.log(`${this.url}/${audioPath}`);
+      return `${this.url}/${audioPath}`;
   }
 
 
