@@ -29,7 +29,8 @@ export class EstudianteNivelComponent {
 
   ngOnInit(){
     this.init_data()   
-     this.obtenerEstudiante()
+    this.obtenerEstudiante()
+    
   } 
 
   init_data() {
@@ -37,13 +38,17 @@ export class EstudianteNivelComponent {
       this._nivelService.getNiveles(this.token).subscribe(
         (response: any[]) => {
           this.niveles = response.map((nivel) => {
+          
+            
             return {
+              
               ...nivel,
               completado: false,
+              
             };
+            
           });
-  
-         
+          
         },
         (error) => {
           console.error('Error al obtener niveles:', error);
